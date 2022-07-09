@@ -1,0 +1,47 @@
+Docker swarm:
+1.To start as manager
+ docker swarm init --advertise-addr <public ip of manager>
+2.To start node as wworkers
+ paste the command when we get from manager node into the worker machine
+3.To see the node 
+ docker node ls
+4.To start the service
+ docker service create --name <some name> --replicas <some number> serive_name
+ ex: docker service create --name webserver -p 9090:8080 --replicas tomcat
+5.To see the service 
+ docker service ps <service_name>
+6.To see the all the services running
+ docker service ls
+7.To stop the service
+ docker serive rm <service_name>
+8.To scale the service (increase/decrease no of services)
+ docker service scale <service_name>=<number>
+ ex: docker service scale webserver=3
+9.To update the service(service version changes)
+ docker service update --image <service>:<version> <service-name>
+ ex: docker service update --image tomcat:8 webserver
+10.To cameback to the initial version of service(rollback)
+ docker service update --rollback <service_name>
+ ex: docker service update --rollback webserver 
+11.To remove worker from swarm
+ docker node update --availability drain worker
+12.To join worker into swarm
+ docker node update --availability active worker
+13.To make worker node as manager (promoting)
+ docker node promote worker
+14.To make workernode tookback as worker status
+ docker node demote worker
+15.worker selfleave go in to the worker machine
+ docker swarm leave
+16.To join node as worker in swarm (in manager machine)
+  docker swarm join-token worker
+ copy the command then paste into the worker machine
+17.manager wants to leave the swarm(into manager machine)
+ (all workers also deleted)
+ docker swarm leave --force 
+18.To join manager in swarm
+ docker swarm init
+ copy the command then paste into the worker nodes also
+
+
+ 

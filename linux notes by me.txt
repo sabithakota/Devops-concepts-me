@@ -1,0 +1,185 @@
+1.To sse the user who is logged in
+ whoami
+2.To see tge list of usesr logged into the linux server
+ who
+3.To see the home directory of the current user
+ echo $HOME
+4.To create empty files 
+ touch file1 file2 file3
+ Note:touch will create empty files but create time stamps of the file
+5.To create files that can store data
+ cat >filename
+ENter some data
+To come  out of cat ctr+d
+6.To display the content of file
+cat filename
+7.To append data to the existin file
+ cat >> filename
+8.To see the list of files in pwd
+ ls =list of files
+ ls -l =to see log listing of files(more details of files)
+ ls -a = To see all hidden files and folders
+ ls -lh =To see the file sizes in human readable formate
+ ls -lt =To see the fiels information based on their timestamps
+ ls -ltr =To see reverse the timestamp of the files
+ ls -li =To see the inode numbers of files
+ ls -ld =To see the metadata of directory
+9.To create directories
+ mkdir dirname
+10.To create mutiple dirctories on within other
+ mkdir -p d1/d2/d3/d4
+11.To delete an empty directories 
+ rmdir dirname
+12.To delete a directory with files and folders
+ rm -r dirname
+13.To change directories 
+ cd path_of_directroy
+ . represent current directory so cd . will put the control 
+in the present working directory only
+ .. represents parent directroy so cd .. wiil put the control
+to the parent of the curretn directory
+ cd and cd~ will take the control to the home directroy of the current user
+14.To copy files
+ cp srcfile destfile
+ If the destfile is already present cp will overwrite that file
+ If the destfile is not presetn cp will create the new file
+ To copy the directories
+ cp -r srcdire destdir
+ To copy the files and also preserve the time stamps 
+ cp -p srcfile destfile
+15.To move files(cut paste)
+ mv srcfile destfile
+ mv workrs like rename when the destination is the same directory
+ mv works like cut paste wen the  destination is a different directory
+16.Linking 
+ This is 2 types a)Soft link b) Hard link
+ a)Soft link is similat to s shortcut,it is used for easy access of data
+ But if the original file is deleted the soft link files is of not ise
+ ln -s srcfile destfile
+ b)Hard link is file which has the same inode number as the original file 
+even when the original file is deleted we can still access the data using 
+hard link file 
+ ln srcfile destfile
+ If we run ls -li we can see that both  the srcfile detfile have the same 
+inode numbers,whatever changes are done in the srcfile will be immediately reflected 
+to the destfile
+
+Text processing Tools:
+========================
+less:This is used to display the content of the file in pagewise fashion
+     where we can navigate up and down using the arrow keys
+	To comeout of less q
+  	less filename
+head:This is used to display the top 10 lines of file
+	head filename
+   To display only top 3 lines of the file
+ 	head -3 filename
+tail:This is used to display the lst 10 lines of file
+	tail filename
+  To display last 5 lines of file
+	tail -5 filename
+grep: This is used to search for specific string and display all those 
+      lines where the string is present
+     To search for a word called "spool" in /etc/passwd file
+	grep spool /etc/passwd
+     To search for "Spool" without taking the upper/lowercase into considaration
+	grep -i spool /etc/passwd
+     To search for the work spool and also display line numbers
+	grep -n spool /etc/passwd
+     To search for all the lines where the word spool is not present
+	grep -v spool /etc/passwd
+cut:This is used to display the data in column fasion
+    To display only 1st and 7th column from /etc/passwd file
+	cut -d ":" -f 1,7 /etc/passwd
+wc:used to count the number of lines,words and chars in file
+	wc filename
+       To display only no of lines in file
+	wc -l filename
+       To display only no words in file
+	wc -w filename
+       To display only chars in file
+	wc -c filename
+sort:Usd to sort the content of file
+	sort fielname
+Not: sort by defauly performs an alphabet sort
+    To pserform a numerical sort
+      sort -n filename
+    To perform a reverse numerical sort
+	sort -nr filename
+
+Redirection:
+==============
+send the output,error and both into a file is called redirection
+we have 3 types of redirection
+1)Output redirection
+ To send the output of ls -la into file1
+	ls -la > file1
+ To send the output of multiple commands
+	(date;cal) > file1
+2)Error redirection
+ To send the error msg of the below mkdir command in file2
+	mkdir d1/d2/d3/d4 2> file2
+
+3)Both redirection
+ To redirect both error and output we can use &>
+ (data;cal) &> file3
+
+Piping
+=========
+Send the output of a command as input for some other command is called 
+piping
+1.To count the no of lines displayed when ls -la is executed
+  we can first store in file using redirection an count using wc -l
+ we can use pipeng
+ ls -la file1 | wc -l
+2.To capture only 5th line from /etc/passwd file
+  head -5 /etc/passw | tail -5
+3.To capture only lines bet 5-10 from /etc/passwd
+ head -10 /etc/passwd | tail -5
+4.To capture the 1st occurance of spool word from /etc/passwd file
+  grep spool /etc/passwd | head -1
+5.To capture the 3rd occurance of spool word /etc/paaswd file
+ grep spool /etc/passwd | head -3 | tail -1
+
+Changing permissions on files and floders
+========================================
+This can be done using chmod command and it is performed in 2 ways
+1.using numerical notaion
+read - 4
+write - 2
+execute - 1
+ To give all permissions to user,group and others
+	chmod 777 file1
+
+ To give all permissions to user,read and execute to group and no permissions to others
+	chmod 750 file2
+
+ To recursively give permissions to files and subfolder present in a directory
+	chmod -R 777 dir_name
+
+2.using alphabetical notation
+ Permissions can also be changed using alphabetical notation
+owner  -    u
+group -     g
+others   - o
+
+read  -r
+write  - w
+execute - x
+
++   is used for adding permissions
+- is used for subtracting permsiions
+= is used for assigning permissions
+To add excute permissions to owner,remove write to group on file1
+chmod u+x,g-w file1
+
+To remove read permissions to owner,assign only write and execute to group and remove read for others and add execute for others
+chmod u-r,g=wx,o-r+x file2
+
+Creating users
+===================
+adduser username
+To check the user info
+cat /etc/passwd
+
+ 
